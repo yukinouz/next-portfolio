@@ -1,20 +1,49 @@
 import Link from "next/link";
+import Image from "next/image";
+import githubImg from "@/public/images/github.svg";
+import linkedinImg from "@/public/images/linkedin.svg";
+import twitterImg from "@/public/images/twitter.svg";
+import facebookImg from "@/public/images/facebook.svg";
 
 const Footer = () => {
   return (
     <footer>
       <div>
         <a href="https://www.google.com/">
-          <img src="/images/github.svg" alt="logo" />
+          <Image
+            src={githubImg}
+            alt="GitHub"
+            width={40}
+            height={40}
+            sizes="100vw"
+          />
         </a>
         <a href="https://www.google.com/">
-          <img src="/images/linkedin.svg" alt="logo" />
+          <Image
+            src={linkedinImg}
+            alt="Linkedin"
+            width={40}
+            height={40}
+            sizes="100vw"
+          />
         </a>
         <a href="https://www.google.com/">
-          <img src="/images/twitter.svg" alt="logo" />
+          <Image
+            src={twitterImg}
+            alt="Twitter"
+            width={40}
+            height={40}
+            sizes="100vw"
+          />
         </a>
         <a href="https://www.google.com/">
-          <img src="/images/facebook.svg" alt="logo" />
+          <Image
+            src={facebookImg}
+            alt="Facebook"
+            width={40}
+            height={40}
+            sizes="100vw"
+          />
         </a>
         <hr />
         <Link href="/blog">Blog</Link>
