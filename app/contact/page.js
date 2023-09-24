@@ -5,7 +5,7 @@ export default function Contact() {
         <div className="container">
           <h1>Contact</h1>
           <p>お気軽にご連絡ください</p>
-          <form action="https://formspree.io/f/xxxxxxx" method="POST">
+          <form action="https://formspree.io/f/moqokrdd" method="POST">
             <label htmlFor="name">お名前</label>
             <input type="text" name="name" id="name" required />
             <label htmlFor="email">メールアドレス</label>
