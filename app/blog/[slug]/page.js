@@ -1,21 +1,28 @@
-import fs from "fs"; // ファイル読み込みに
-import matter from "gray-matter"; // `.md`ファイルからメタデータを取得する
-import path from "path"; // ファイルへのパスを扱う
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
+import { getAllBlogs, getSingleBlog } from "@/app/utils/mdQueries";
+import PrevNext from "@/app/components/prevNext";
 
-async function getSingleBlog(context) {
-  const { slug } = context.params;
-  const data = await import(`@/data/${slug}.md`);
-  const singleDocument = matter(data.default);
-
+export async function generateMetadata(props) {
+  const { singleDocument } = await getSingleBlog(props);
   return {
-    singleDocument: singleDocument,
+    title: singleDocument.data.title,
+    description: singleDocument.data.excerpt,
   };
 }
 
 const SingleBlog = async (props) => {
   const { singleDocument } = await getSingleBlog(props);
+
+  // prev / next
+  // 前後のidを取得する
+  const { blogs } = await getAllBlogs();
+  const prev = blogs.filter(
+    (blog) => blog.frontmatter.id === singleDocument.data.id - 1
+  );
+  const next = blogs.filter(
+    (blog) => blog.frontmatter.id === singleDocument.data.id + 1
+  );
   return (
     <>
       <div className="img-container">
@@ -34,6 +41,7 @@ const SingleBlog = async (props) => {
           <p>{singleDocument.data.date}</p>
           <ReactMarkdown>{singleDocument.content}</ReactMarkdown>
         </div>
+        <PrevNext next={next} prev={prev} />
       </div>
     </>
   );
@@ -42,22 +50,6 @@ const SingleBlog = async (props) => {
 export default SingleBlog;
 
 export async function generateStaticParams() {
-  async function getAllBlogs() {
-    // dataディレクトリにアクセスし、中のデータをfilesに格納
-    const files = fs.readdirSync(path.join("data"));
-    const blogs = files.map((fileName) => {
-      const slug = fileName.replace(".md", "");
-      const fileData = fs.readFileSync(path.join("data", fileName), "utf-8");
-      const { data } = matter(fileData);
-      return {
-        frontmatter: data,
-        slug: slug,
-      };
-    });
-    return {
-      blogs: blogs,
-    };
-  }
   const { blogs } = await getAllBlogs();
   const paths = blogs.map((blog) => `/${blog.slug}`);
   return paths;

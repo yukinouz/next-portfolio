@@ -7,6 +7,11 @@ import reactImg from "@/public/images/react.svg";
 import gatsbyImg from "@/public/images/gatsby.svg";
 import nextImg from "@/public/images/next.svg";
 
+export const metadata = {
+  title: "Yuki Nose",
+  description: "Yuki Noseのポートフォリオサイトです。",
+};
+
 export default function Home() {
   return (
     <main>
